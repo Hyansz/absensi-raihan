@@ -37,7 +37,7 @@ document.getElementById('getAbsensiBtn').addEventListener('click', async functio
 
     if (data.length === 0) {
         const noDataMessage = document.createElement('tr');
-        noDataMessage.innerHTML = '<td colspan="2">Belum ada data yang dimasukkan</td>';
+        noDataMessage.innerHTML = '<td colspan="3">Belum ada data yang dimasukkan</td>';
         listContainer.appendChild(noDataMessage);
 
         setTimeout(() => {
@@ -51,7 +51,16 @@ document.getElementById('getAbsensiBtn').addEventListener('click', async functio
         listItem.innerHTML = `
             <td>${index + 1}</td>
             <td>${employeeId}</td>
+            <td>${getCurrentDate()}</td>
         `;
         listContainer.appendChild(listItem);
     });
 });
+
+function getCurrentDate() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}

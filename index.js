@@ -1,5 +1,5 @@
 const express = require('express');
-const { validateEmployeeId, tambahAbsensi, absensiData } = require('./backend');
+const { validateEmployeeId, tambahAbsensi, absensiData, isEmployeeIdExists } = require('./backend');
 
 const app = express();
 app.use(express.json());
@@ -9,12 +9,18 @@ app.post('/absensi', (req, res) => {
     const { employeeId } = req.body;
     const timestamp = new Date();
 
-    if (validateEmployeeId(employeeId)) {
-        tambahAbsensi(employeeId, timestamp);
-        res.json({ success: true });
-    } else {
-        res.json({ success: false });
+    if (!validateEmployeeId(employeeId)) {
+        res.json({ success: false, message: 'ID harus terdiri dari 5 karakter.' });
+        return;
     }
+
+    if (isEmployeeIdExists(employeeId)) {
+        res.json({ success: false, message: 'ID karyawan sudah ada dalam daftar.' });
+        return;
+    }
+
+    tambahAbsensi(employeeId, timestamp);
+    res.json({ success: true });
 });
 
 app.get('/absensiData', (req, res) => {

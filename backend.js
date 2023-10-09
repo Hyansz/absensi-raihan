@@ -8,4 +8,8 @@ function tambahAbsensi(employeeId, timestamp) {
     absensiData.push({ employeeId, timestamp });
 }
 
-module.exports = { validateEmployeeId, tambahAbsensi, absensiData };
+function isEmployeeIdExists(employeeId) {
+    return absensiData.some(entry => entry.employeeId === employeeId);
+}
+
+module.exports = { validateEmployeeId, tambahAbsensi, absensiData, isEmployeeIdExists };

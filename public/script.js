@@ -23,7 +23,13 @@ document.getElementById('submitBtn').addEventListener('click', async function() 
             document.getElementById('validationMessage').innerText = '';
         }, 1000); // Hapus pesan setelah 3 detik
     } else {
-        document.getElementById('validationMessage').innerText = 'Gagal melakukan absensi.';
+        document.getElementById('validationMessage').innerText = data.message;
+        setTimeout(() => {
+            document.getElementById('validationMessage').innerText = '';
+        }, 6000);
+        setTimeout(() => {
+            document.getElementById('employeeId').value = '';
+        }, 7000);
     }
 });
 
